@@ -2,15 +2,16 @@
 using namespace std;
 #include<math.h>
 
-const double p1 = 7800;
-const double g = 9.78;
-const double p0 = 950;
-const double D = 0.02;
-const double t = 0.2;
-const double drop_L = 25.0;
+const double p1 = 7800;  //小球密度g/cm-3
+const double g = 9.78;    //重力加速度
+const double p0 = 950;  //蓖麻油密度
+const double D = 0.02;  //圆管内径直径
+const double t = 0.2;   //时间的不确定度 s
+const double drop_L = 25.0;//小球下落经过的距离
 
 
 int main() {
+	//小球直径测量数据
 	double length[5][2] = {
 		{16.528,15.540},
 		{16.547,15.547},
@@ -18,8 +19,8 @@ int main() {
 		{16.535,15.560},
 		{16.547,15.571}
 	};
-	double temp = 54;
-	double drop_time = 6.31;
+	double temp = 54;//温度
+	double drop_time = 6.31;//下落时间
 	int i = 0, j = 0;
 	double k = 0;
 
