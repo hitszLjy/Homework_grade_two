@@ -1,7 +1,4 @@
 # Homework_grade_two
-#include <iostream>
-int main(){
-cout<<"hello world!"<<endl;
-
+用于记录大二学年的作业代码，较为杂乱。
 }
 
