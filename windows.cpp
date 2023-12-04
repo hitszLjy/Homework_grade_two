@@ -82,6 +82,8 @@ int purchase() {
 	char ch;
 	int start = 0;
 	int finish = 0;
+	string start_n;
+	string finish_n;
 	int num = 0;
 	int price = 0;
 	cout << "购票程序" << endl;
@@ -89,11 +91,13 @@ int purchase() {
 	cout << "请选择始发站：（或按下ESC键返回主界面）" << endl;
 	map_show();
 
-	cin >> start;
+	cin >> start_n;
+	start =  num_judge(start_n);
 	cout << "请选择终点站：(或按下ESC键返回主界面）" << endl;
 	map_show();
 	
-	cin >> finish;
+	cin >> finish_n;
+	finish = num_judge(finish_n);
 	price = calculate(start, finish);
 	cout << "单张票价：" << price << endl;
 	do {
@@ -139,27 +143,43 @@ int map() {
 
 int calculate(int a, int b) {
 	
-	Dijkstra(g, a);   //图与源点
-	int temp = b;
+	Dijkstra(g, b);   //图与源点
+	int temp = a;
 	int trans_count = 0;//换乘次数
 	int length = 0;
+	int line_f = 0;
+	int line_s = 0;
+	Station* s = NULL;
+	line_f = line_choose(temp, path[temp]);
 	if (dist[b].w != INF) {
 		
 		cout  << a << sta[a].sta_name << "到" << b << sta[b].sta_name << "的推荐乘车路径为：" << endl;
-		cout << "终：";
+		cout << "开始：";
+		cout << line_f << "号线";
 		show_data(temp);   
 		
-		while (path[temp] != -1) {
+		
+		while (path[temp] != -1) {	
 			cout << " | " ;
-			show_data(path[temp]);     //打印该站点的信息
-
+			cout << line_f << "号线";
+			//show_data(path[temp]);  
+			
+			s = &sta[path[temp]];
+			cout << *s << endl;
+			//打印该站点的信息
 			if (transfers[temp] == 1) {
-				cout << endl << "—————— 在此站点换乘" << endl<<endl;
+			
+				line_s = line_choose(path[temp], path[path[temp]]);
+				cout  << "—————— 在此站点由"<<line_f<<"号线换乘" ;
+				cout << line_s << "号线" <<endl;
 				trans_count++;
+				line_f = line_s;
 			}
+
 			temp = path[temp];
 		}
-		length = dist[b].w - control * trans_count;
+		cout << "结束" << endl;
+		length = dist[a].w - control * trans_count;
 		cout << endl;
 		cout  << "总的最短路径长度为：" << length<< endl;
 		cout << "换乘次数为："  <<trans_count<< endl;
